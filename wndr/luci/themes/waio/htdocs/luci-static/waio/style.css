@@ -1,0 +1,313 @@
+html, body {height: 100%;}
+*{
+	padding:0px;
+	margin:0px;
+}
+body {
+	font: normal normal 14px Calibri;
+	color: #000000;
+	background: #5c5c5c url(img/bg.png) no-repeat scroll top left;                
+	padding: 0px;
+	margin: 0px;				
+}            
+html body {
+	min-width: 970px;                
+	max-width: 100%;
+	width: auto;
+	font-family: 'Segoe WP', 'Segoe UI', 'Verdana';
+}            
+a.metro, a.select {
+	font-family: 'Segoe WP', 'Segoe UI', 'Verdana';
+	font-size: 23px;
+	font-weight: 100;
+	padding-bottom: 1px;
+	-webkit-transition: border 0.2s ease-in-out, color 0.2s ease-in-out;
+	-moz-transition: border 0.2s ease-in-out, color 0.2s ease-in-out;
+	-ms-transition: border 0.2s ease-in-out, color 0.2s ease-in-out;
+	transition: border 0.2s ease-in-out, color 0.2s ease-in-out;
+	margin-left:15px;
+}
+
+li{
+	position: relative;
+	list-style: none;			
+}
+li a{			
+	text-decoration:none;			
+}
+
+h3, h1, h4 {
+	font-family: 'Segoe WP Light', 'Segoe UI Light', 'Segoe UI', 'Verdana';
+}
+a:link {
+	text-decoration:none;
+	color: #0958ff;
+}
+a:visited {
+	text-decoration:none;
+	color: #0958ff;
+}
+a:hover {
+	text-decoration:underline;
+	color: #0958ff;
+}          
+
+/* Headings
+----------------------------------------------- */
+h2 {
+	margin: 0 0 1em 0;
+	color: #969696;		
+	font: normal bold 13px 'Segoe WP', S'egoe UI', 'Verdana', 'Trebuchet MS', 'Trebuchet', 'sans-serif';	
+	text-transform: uppercase;
+	border-bottom: 1px solid #969696;
+}            
+/* Accents
+---------------------------------------------- */            
+a.metro:link {
+	color: grey;
+	text-decoration: none;
+}
+a.metro:visited {
+	color: grey;
+	text-decoration: none;
+}
+a.metro:hover {
+	color: #494949;
+	text-decoration: none;
+	border-bottom: 2px solid;
+	border-color: grey;
+}
+a.metro:active {
+	color: grey;
+	text-decoration: none;
+}
+a.select:link {
+	color: black;
+	text-decoration: none;
+	border-bottom: 2px solid;
+	border-color: #5aa0fb;
+}
+a.select:visited {
+	color: black;
+	text-decoration: none;
+	border-bottom: 2px solid;
+	border-color: #5aa0fb;
+}
+a.select:hover {
+	color: #494949;
+	text-decoration: none;
+	border-bottom: 2px solid;
+	border-color: #5aa0fb;
+}
+a.select:active {
+	color: black;
+	text-decoration: none;
+	border-bottom: 2px solid;
+	border-color: #5aa0fb;
+}
+		   
+.left{
+	float:left;
+}
+.right{
+	float:right;
+}
+#header{
+	position: relative;				
+	height: 102px;
+	width: 910px;
+}
+#navigation{
+	padding:15px;	
+	height: 50px;
+}			
+#navigation ul {
+	margin:0;
+	padding:0;
+	list-style:none;
+	background:#FFFFFF;
+}
+#navigation ul li {
+	float:left;	
+	padding:0px;
+}
+#navigation ul li a {
+	float:left;
+	background:#FFFFFF;
+	color: #CCC;
+	display:block;
+	font-weight:normal;
+	line-height:35px;
+	margin:0px 5px;
+	padding:0px 5px;
+	text-align:center;
+	text-decoration:none;		
+}
+#navigation li ul a:hover, 
+#navigation ul li li:hover > a  {
+	background:#3E79B4;
+	border:0px;
+	color: white;
+	text-decoration:none;	
+}
+#navigation li li {				
+	display:block;
+	margin:0px;
+	padding:0px;
+	width: 160px;
+}
+#navigation li ul {
+	background: #F4F5F7;
+	border: 1px solid #A6A6A6;
+	height:auto;
+	padding:0px;						
+	left: -999em;
+	margin: 36px 0 0 5px;
+	position: absolute;
+	width: 160px;
+	z-index: 9999;    	
+}
+#navigation li:hover ul {
+	left: auto;
+	display:block;
+}
+#navigation li ul a {
+	background: none;
+	border: 0 none;
+	border-bottom: 1px solid #DDD;
+	width: 135px; 
+	color: #555;	
+	display:block;
+	font-size:12px;
+	font-style:normal;
+	margin:0px;
+	padding:0px 10px 0px 15px;
+	text-align:left;
+}
+#navigation li li ul {
+	margin: -1px 0 0 160px;    	
+	visibility:hidden;
+}
+#navigation li li:hover ul {
+	visibility:visible;
+}	
+#titolo .title{			
+	font-family: 'Segoe WP Light', 'Segoe UI Light', 'Segoe UI', 'Verdana';
+	display: block;
+	font-size: 2em;
+	font-weight: bold;
+	text-align: center;
+}            
+#footer{
+	position: relative;
+	background: url('img/footer.png') no-repeat;
+	margin-top: -250px;
+	height: 250px;
+}
+
+#wrap {min-height: 100%;}
+
+#main {overflow:auto;
+	padding-bottom: 250px;}  /* must be same height as the footer */
+	
+			/*Opera Fix*/
+body:before {/* thanks to Maleika (Kohoutec)*/
+content:"";
+height:100%;
+float:left;
+width:0;
+margin-top:-32767px;/* thank you Erik J - negate effect of float*/
+}
+	
+#topbar {
+	direction: ltr;
+	color: #CCC;
+	font: normal 13px/28px sans-serif;
+	height: 28px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	min-width: 600px;
+	z-index: 99999;
+	background-color: #464646;
+	background-image: -ms-linear-gradient(bottom,#373737,#464646 5px);
+	background-image: -moz-linear-gradient(bottom,#373737,#464646 5px);
+	background-image: -o-linear-gradient(bottom,#373737,#464646 5px);
+	background-image: -webkit-gradient(linear,left bottom,left top,from(#373737),to(#464646));
+	background-image: -webkit-linear-gradient(bottom,#373737,#464646 5px);
+	background-image: linear-gradient(bottom,#373737,#464646 5px);
+}
+
+#topbar * {
+	height: auto;
+	width: auto;
+	margin: 0;
+	padding: 0;
+	position: static;
+	text-transform: none;
+	letter-spacing: normal;
+	line-height: 1;
+	font: normal 13px/28px sans-serif;
+	color: #CCC;
+	text-shadow: #444 0 -1px 0;
+	text-decoration: none;
+}
+#topbar ul{
+	list-style: none;
+}
+
+#topbar ul.left li a{
+	height: 28px;
+	display: block;
+	padding: 0 12px;
+	margin: 0;
+	border-right: 1px solid #333;
+}
+
+#topbar li a:hover{
+	background-color: #272727;
+}
+
+#topbar ul.left li{
+	float: left;
+	border-right: 1px solid #555;
+}			
+#topbar ul.left li span{
+	border-right: 1px solid #333;
+	height: 28px;
+	display: block;
+	padding: 0 12px;
+	margin: 0;
+}
+
+#topbar ul.right li{
+	float: right;
+	border-left: 1px solid #555;
+}			
+#topbar ul.right li span{
+	border-left: 1px solid #333;
+	height: 28px;
+	display: block;
+	padding: 0 12px;
+	margin: 0;
+}
+#topbar ul.right li a{
+	height: 28px;
+	display: block;
+	padding: 0 12px;
+	margin: 0;
+	border-left: 1px solid #333;
+}      
+#page{
+	overflow: hidden;    
+	margin: 58px auto;
+	width: 890px;
+	overflow: hidden;
+	background-color: white;
+	-moz-box-shadow: 0 0 40px rgba(0, 0, 0, .15);
+	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, .15);
+	-goog-ms-box-shadow: 0 0 10px #333333;
+	box-shadow: 0 0 40px rgba(0, 0, 0, .15);                
+	padding: 40px;
+}

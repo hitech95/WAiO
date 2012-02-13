@@ -1,0 +1,37 @@
+10
+
+dir
+30494
+svn://svn.openwrt.org/openwrt/trunk/target/linux/amazon/files
+svn://svn.openwrt.org/openwrt
+
+
+
+2011-04-10T15:08:28.506341Z
+26576
+hauke
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3c298f89-4303-0410-b956-a3cf2f4a3e73
+
+include
+dir
+
+arch
+dir
+
+drivers
+dir
+

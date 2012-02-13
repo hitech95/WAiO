@@ -1,0 +1,6 @@
+#!/bin/sh
+uci batch <<-EOF
+	set luci.themes.WAiO=/luci-static/waio
+        commit luci
+EOF
+	

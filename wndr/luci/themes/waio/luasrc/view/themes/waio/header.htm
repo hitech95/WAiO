@@ -1,0 +1,176 @@
+<%#
+LuCI - Lua Configuration Interface
+Copyright 2008 Steven Barth <steven@midlink.org>
+Copyright 2008-2010 Jo-Philipp Wich <xm@subsignal.org>
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
+$Id: header.htm 7810 2011-10-28 15:15:27Z jow $
+
+-%>
+<%
+	local sys  = require "luci.sys"
+	local http = require "luci.http"
+	local disp = require "luci.dispatcher"
+
+	local hostname = sys.hostname()
+	local load1, load5, load15 = sys.loadavg()
+
+	local request  = disp.context.path
+	local request2 = disp.context.request
+
+	local category = request[1]
+	local cattree  = category and disp.node(category)
+
+	local leaf = request2[#request2]
+
+	local tree = disp.node()
+	local node = disp.context.dispatched
+
+	local categories = disp.node_childs(tree)
+
+	local c = tree
+	local i, r
+
+	-- tag all nodes leading to this page
+	for i, r in ipairs(request) do
+		if c.nodes and c.nodes[r] then
+			c = c.nodes[r]
+			c._menu_selected = true
+		end
+	end
+
+	http.prepare_content("text/html")
+
+	local function nodeurl(prefix, name, query)
+		local url = controller .. prefix .. name .. "/"
+		if query then
+			url = url .. http.build_querystring(query)
+		end
+		return pcdata(url)
+	end
+
+
+	local function submenu(prefix, node)
+		local childs = disp.node_childs(node)
+		if #childs > 0 then
+%>
+	<ul>
+		<%-
+			for i, r in ipairs(childs) do
+				local nnode = node.nodes[r]
+				local href  = controller .. prefix .. r .. "/" ..
+					(nnode.query and http.build_querystring(nnode.query) or "")
+		%>
+			<li>
+				<a<%=ifattr(nnode._menu_selected, "class", "active")%> href="<%=luci.util.pcdata(href)%>"><%=translate(nnode.title)%></a>
+				<%- submenu(prefix .. r .. "/", nnode) %>
+			</li>
+		<%-
+			end
+		%>
+	</ul>
+<%
+		end
+	end
+%>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<%=luci.i18n.context.lang%>" lang="<%=luci.i18n.context.lang%>">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<link rel="stylesheet" type="text/css" media="screen" href="<%=media%>/cascade.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<%=media%>/style.css" />
+<script type="text/javascript" src="<%=resource%>/xhr.js"></script>
+<title><%=striptags( hostname .. ( (node and node.title) and ' - ' .. translate(node.title) or '')) %> - LuCI</title>
+</head>
+<body class="lang_<%=luci.i18n.context.lang%>">
+
+<div id="topbar">	
+<ul class="left">
+	<li><span><%=hostname%></span></li>
+	<li><span><%=luci.version.distversion%></span></li>
+	<li><span><%:Load%>: <%="%.2f" % load1%> <%="%.2f" % load5%> <%="%.2f" % load15%></li></span>
+	<li><a id="xhr_poll_status" style="display:none" onclick="XHR.running() ? XHR.halt() : XHR.run()"><%:Auto Refresh%>:
+		<font id="xhr_poll_status_on"><%:on%></font>
+		<font id="xhr_poll_status_off" style="display:none"><%:off%></font>
+		</a>
+	</li>
+</ul>
+<%
+if tree.nodes[category] and tree.nodes[category].ucidata then
+	local ucic = 0
+	for i, j in pairs(require("luci.model.uci").cursor():changes()) do
+		for k, l in pairs(j) do
+			for m, n in pairs(l) do
+				ucic = ucic + 1;
+			end
+		end
+	end
+-%>
+<ul class="right">
+	<% if ucic > 0 then %>
+		<li><a href="<%=controller%>/<%=category%>/uci/changes/?redir=<%=luci.http.urlencode(luci.http.formvalue("redir") or REQUEST_URI)%>"><%:Unsaved Changes%>: <%=ucic%></a></li>
+	<%- else -%>
+		<li><a href="#"><%:Changes%>: 0</a></li>
+	<% end -%>
+</ul>
+<% end %>
+
+<% if #categories > 1 then %>
+	<ul class="right">
+		<% for i, r in ipairs(categories) do %>
+			<li><a<% if request[1] == r then %> class="active"<%end%> href="<%=controller%>/<%=r%>/"><%=striptags(translate(tree.nodes[r].title))%></a></li>
+		<% end %>
+	</ul>
+<% end %>
+</div>
+<div id="wrap">
+			<div id="main">
+				<div id="page">
+					<div id="header">   
+						<img border="0" class="logo left" alt="Logo fw by Coatto87" src="<%=media%>/img/logo-fw.png">						
+						<img border="0" class="logo right" alt="Logo openwrt" src="<%=media%>/img/logo-wrt.png">
+					</div>
+					<div id="navigation">
+							<font size="4">
+								<ul>
+																	<%
+											local childs = disp.node_childs(cattree)
+											if #childs > 0 then
+												for i, r in ipairs(childs) do
+													local nnode = cattree.nodes[r]
+													local href  = controller .. "/" .. category .. "/" .. r ..
+														(nnode.query and http.build_querystring(k.query) or "")
+										%>
+											<li>
+												<a<%=ifattr(nnode._menu_selected, "class", "select")%> class="metro" href="<%=href%>"><%=translate(nnode.title)%></a>
+												<%- submenu("/" .. category .. "/" .. r .. "/", nnode) %>
+											</li>
+										<%
+												end
+											end
+										%>
+								</ul>
+							</font>
+						</div>
+					<div id="maincontent">
+						<noscript>
+							<div class="errorbox">
+								<strong><%:Java Script required!%></strong><br />
+								<%:You must enable Java Script in your browser or LuCI will not work properly.%>
+							</div>
+						</noscript>
+
+						<%- if luci.sys.user.getuser("root") and not luci.sys.user.getpasswd("root") then -%>
+						<div class="errorbox">
+							<strong><%:No password set!%></strong><br />
+							<%:There is no password set on this router. Please configure a root password to protect the web interface and enable SSH.%><br />
+							<a href="<%=pcdata(luci.dispatcher.build_url("admin/system/admin"))%>"><%:Go to password configuration...%></a>
+						</div>
+						<%- end -%>
